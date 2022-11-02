@@ -5,11 +5,11 @@ using namespace std;
 union proDouble
 {
     double number;
-    // Размеры double и long long совпадают - 8 байт
+    // Р Р°Р·РјРµСЂС‹ double Рё long long СЃРѕРІРїР°РґР°СЋС‚ - 8 Р±Р°Р№С‚
     long long bytes; 
 };
 
-// Вывод числа в бинарном представлении для типа long
+// Р’С‹РІРѕРґ С‡РёСЃР»Р° РІ Р±РёРЅР°СЂРЅРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё РґР»СЏ С‚РёРїР° long
 void printLongBinary(long A) 
 {
     for (int i = sizeof(A) * 8 - 1; i >= 0; i--)
@@ -22,7 +22,7 @@ void printLongBinary(long A)
     }
 }
 
-// Вывод числа в бинарном представлении для типа long long
+// Р’С‹РІРѕРґ С‡РёСЃР»Р° РІ Р±РёРЅР°СЂРЅРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё РґР»СЏ С‚РёРїР° long long
 void printLongLongBinary(long long A)
 {
     for (int i = sizeof(A) * 8 - 1; i >= 0; i--)
@@ -37,20 +37,20 @@ void printLongLongBinary(long long A)
 
 int main()
 {   
-    // Выбор Long/Double
+    // Р’С‹Р±РѕСЂ Long/Double
     int answer; 
-    // Выбор правого/левого сдвига, величину сдвига, границ сдвига
+    // Р’С‹Р±РѕСЂ РїСЂР°РІРѕРіРѕ/Р»РµРІРѕРіРѕ СЃРґРІРёРіР°, РІРµР»РёС‡РёРЅСѓ СЃРґРІРёРіР°, РіСЂР°РЅРёС† СЃРґРІРёРіР°
     int right, shift, numberOfDigits, seniorId;
-    // Переменные для битовых масок
+    // РџРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ Р±РёС‚РѕРІС‹С… РјР°СЃРѕРє
     unsigned long long mask, maskLeft, maskRight, numberPart, maskReverted, numberPartReverted;
 
     printf("If you want use long enter 0, if double - 1:\n");
     scanf("%i", &answer);
     if (answer == 0)
     {   
-        // Число, с которым мы работаем
+        // Р§РёСЃР»Рѕ, СЃ РєРѕС‚РѕСЂС‹Рј РјС‹ СЂР°Р±РѕС‚Р°РµРј
         long A;
-        // То, каким число было - для сравнения
+        // РўРѕ, РєР°РєРёРј С‡РёСЃР»Рѕ Р±С‹Р»Рѕ - РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ
         long Before;
 
         printf("You are working with long\nEnter the number:\n");
@@ -59,65 +59,65 @@ int main()
         Before = A;
         printLongBinary(A);
 
-        // Будет выполнен циклический сдвиг, выберите право/лево
+        // Р‘СѓРґРµС‚ РІС‹РїРѕР»РЅРµРЅ С†РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі, РІС‹Р±РµСЂРёС‚Рµ РїСЂР°РІРѕ/Р»РµРІРѕ
         printf("\nA cyclic shift will be performed\nYou should choose side, range of shift, power of shift\nSelect a side (0 - left, 1 - right):\n");
         scanf("%i", &right);
-        // Номер старшего сдвигаемого элемента
+        // РќРѕРјРµСЂ СЃС‚Р°СЂС€РµРіРѕ СЃРґРІРёРіР°РµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
         printf("The number of the senior digit? From 0 to %i\n", sizeof(A) * 8 - 1);
         scanf("%i", &seniorId);
-        // Если старший разряд вне вскяих границ
+        // Р•СЃР»Рё СЃС‚Р°СЂС€РёР№ СЂР°Р·СЂСЏРґ РІРЅРµ РІСЃРєСЏРёС… РіСЂР°РЅРёС†
         if (seniorId < 0 || seniorId > (sizeof(A) * 8 - 1))
         {
-            // Максимальный разряд
+            // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·СЂСЏРґ
             seniorId =  sizeof(A) * 8 - 1;
         }
-        // Сколько цифр будет сдвинуто
+        // РЎРєРѕР»СЊРєРѕ С†РёС„СЂ Р±СѓРґРµС‚ СЃРґРІРёРЅСѓС‚Рѕ
         printf("By what number of digits will the shift be made? From 0 to %i\n", seniorId + 1);
         scanf("%i", &numberOfDigits);
-        // Если диапозон вне всяких границ
+        // Р•СЃР»Рё РґРёР°РїРѕР·РѕРЅ РІРЅРµ РІСЃСЏРєРёС… РіСЂР°РЅРёС†
         if (numberOfDigits < 0 || numberOfDigits > seniorId + 1)
         {
-            // Максимальный сдвиг
+            // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЃРґРІРёРі
             numberOfDigits = seniorId + 1;
         }
-        // Какой величины будет сдвиг
+        // РљР°РєРѕР№ РІРµР»РёС‡РёРЅС‹ Р±СѓРґРµС‚ СЃРґРІРёРі
         printf("How much will a shift?\n");
         scanf("%i", &shift);
         
-        // Смещение 3 цифр на 4 и на 1 - одно и то же
+        // РЎРјРµС‰РµРЅРёРµ 3 С†РёС„СЂ РЅР° 4 Рё РЅР° 1 - РѕРґРЅРѕ Рё С‚Рѕ Р¶Рµ
         shift = shift % numberOfDigits; 
-        // Маска из одних единиц
+        // РњР°СЃРєР° РёР· РѕРґРЅРёС… РµРґРёРЅРёС†
         mask = -1; 
         maskLeft = -1;
         maskRight = -1;
 
-        // Маска, где нули слева
+        // РњР°СЃРєР°, РіРґРµ РЅСѓР»Рё СЃР»РµРІР°
         maskLeft = mask >> (sizeof(mask) * 8 - 1 - seniorId);
-        // Маска, где нули справа
+        // РњР°СЃРєР°, РіРґРµ РЅСѓР»Рё СЃРїСЂР°РІР°
         maskRight = mask << seniorId + 1 - numberOfDigits;
 
-        // Нули справа и слева. Маска вида 00011100
+        // РќСѓР»Рё СЃРїСЂР°РІР° Рё СЃР»РµРІР°. РњР°СЃРєР° РІРёРґР° 00011100
         mask = maskLeft & maskRight;
-        // Часть числа для сдвига (остальное - нули) вида 000XXX00, где XX - цифры из исходного числа A
+        // Р§Р°СЃС‚СЊ С‡РёСЃР»Р° РґР»СЏ СЃРґРІРёРіР° (РѕСЃС‚Р°Р»СЊРЅРѕРµ - РЅСѓР»Рё) РІРёРґР° 000XXX00, РіРґРµ XX - С†РёС„СЂС‹ РёР· РёСЃС…РѕРґРЅРѕРіРѕ С‡РёСЃР»Р° A
         numberPart = mask & A;
 
         // left shift
         if (right == 0) 
         {
-            // Циклический сдвиг влево
+            // Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РІР»РµРІРѕ
             numberPart = (numberPart << shift) | (numberPart >> numberOfDigits - shift);
         }
         // right shift
         else 
         {    
-            // Циклический сдвиг вправо
+            // Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РІРїСЂР°РІРѕ
             numberPart = (numberPart >> shift) | (numberPart << numberOfDigits - shift);
         }
 
-        numberPart = numberPart & mask; // Убираем единицы за границами сдвига
-        // Маска вида 11100011
+        numberPart = numberPart & mask; // РЈР±РёСЂР°РµРј РµРґРёРЅРёС†С‹ Р·Р° РіСЂР°РЅРёС†Р°РјРё СЃРґРІРёРіР°
+        // РњР°СЃРєР° РІРёРґР° 11100011
         maskReverted = ~mask;
-        // Часть числа вида XXX000XX
+        // Р§Р°СЃС‚СЊ С‡РёСЃР»Р° РІРёРґР° XXX000XX
         numberPartReverted = A & maskReverted;
             
         // 000XXX00 | XXX000XX = XXXXXXXX
@@ -142,65 +142,65 @@ int main()
 
         Before = A.bytes;
 
-        // Будет выполнен циклический сдвиг, выберите право/лево
+        // Р‘СѓРґРµС‚ РІС‹РїРѕР»РЅРµРЅ С†РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі, РІС‹Р±РµСЂРёС‚Рµ РїСЂР°РІРѕ/Р»РµРІРѕ
         printf("\nA cyclic shift will be performed\nYou should choose side, range of shift, power of shift\nSelect a side (0 - left, 1 - right):\n");
         scanf("%i", &right);
-        // Номер старшего сдвигаемого элемента
+        // РќРѕРјРµСЂ СЃС‚Р°СЂС€РµРіРѕ СЃРґРІРёРіР°РµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
         printf("The number of the senior digit? From 0 to %i\n", sizeof(A.bytes) * 8 - 1);
         scanf("%i", &seniorId);
-        // Если старший разряд вне вскяих границ
+        // Р•СЃР»Рё СЃС‚Р°СЂС€РёР№ СЂР°Р·СЂСЏРґ РІРЅРµ РІСЃРєСЏРёС… РіСЂР°РЅРёС†
         if (seniorId < 0 || seniorId > (sizeof(A.bytes) * 8 - 1))
         {
-            // Максимальный разряд
+            // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·СЂСЏРґ
             seniorId =  sizeof(A.bytes) * 8 - 1;
         }
-        // Сколько цифр будет сдвинуто
+        // РЎРєРѕР»СЊРєРѕ С†РёС„СЂ Р±СѓРґРµС‚ СЃРґРІРёРЅСѓС‚Рѕ
         printf("By what number of digits will the shift be made? From 0 to %i\n", seniorId + 1);
         scanf("%i", &numberOfDigits);
-        // Если диапозон вне всяких границ
+        // Р•СЃР»Рё РґРёР°РїРѕР·РѕРЅ РІРЅРµ РІСЃСЏРєРёС… РіСЂР°РЅРёС†
         if (numberOfDigits < 0 || numberOfDigits > seniorId + 1)
         {
-            // Максимальный сдвиг
+            // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЃРґРІРёРі
             numberOfDigits = seniorId + 1;
         }
-        // Какой величины будет сдвиг
+        // РљР°РєРѕР№ РІРµР»РёС‡РёРЅС‹ Р±СѓРґРµС‚ СЃРґРІРёРі
         printf("How much will a shift?\n");
         scanf("%i", &shift);
         
-        // Смещение 3 цифр на 4 и на 1 - одно и то же
+        // РЎРјРµС‰РµРЅРёРµ 3 С†РёС„СЂ РЅР° 4 Рё РЅР° 1 - РѕРґРЅРѕ Рё С‚Рѕ Р¶Рµ
         shift = shift % numberOfDigits; 
-        // Маска из одних единиц
+        // РњР°СЃРєР° РёР· РѕРґРЅРёС… РµРґРёРЅРёС†
         mask = -1; 
         maskLeft = -1;
         maskRight = -1;
 
-        // Маска, где нули слева
+        // РњР°СЃРєР°, РіРґРµ РЅСѓР»Рё СЃР»РµРІР°
         maskLeft = mask >> (sizeof(mask) * 8 - 1 - seniorId);
-        // Маска, где нули справа
+        // РњР°СЃРєР°, РіРґРµ РЅСѓР»Рё СЃРїСЂР°РІР°
         maskRight = mask << seniorId + 1 - numberOfDigits;
 
-        // Нули справа и слева. Маска вида 00011100
+        // РќСѓР»Рё СЃРїСЂР°РІР° Рё СЃР»РµРІР°. РњР°СЃРєР° РІРёРґР° 00011100
         mask = maskLeft & maskRight;
-        // Часть числа для сдвига (остальное - нули) вида 000XXX00, где XX - цифры из исходного числа A
+        // Р§Р°СЃС‚СЊ С‡РёСЃР»Р° РґР»СЏ СЃРґРІРёРіР° (РѕСЃС‚Р°Р»СЊРЅРѕРµ - РЅСѓР»Рё) РІРёРґР° 000XXX00, РіРґРµ XX - С†РёС„СЂС‹ РёР· РёСЃС…РѕРґРЅРѕРіРѕ С‡РёСЃР»Р° A
         numberPart = mask & A.bytes;
 
         // left shift
         if (right == 0) 
         {
-            // Циклический сдвиг влево
+            // Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РІР»РµРІРѕ
             numberPart = (numberPart << shift) | (numberPart >> numberOfDigits - shift);
         }
         // right shift
         else 
         {    
-            // Циклический сдвиг вправо
+            // Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РІРїСЂР°РІРѕ
             numberPart = (numberPart >> shift) | (numberPart << numberOfDigits - shift);
         }
 
-        numberPart = numberPart & mask; // Убираем единицы за границами сдвига
-        // Маска вида 11100011
+        numberPart = numberPart & mask; // РЈР±РёСЂР°РµРј РµРґРёРЅРёС†С‹ Р·Р° РіСЂР°РЅРёС†Р°РјРё СЃРґРІРёРіР°
+        // РњР°СЃРєР° РІРёРґР° 11100011
         maskReverted = ~mask;
-        // Часть числа вида XXX000XX
+        // Р§Р°СЃС‚СЊ С‡РёСЃР»Р° РІРёРґР° XXX000XX
         numberPartReverted = A.bytes & maskReverted;
             
         // 000XXX00 | XXX000XX = XXXXXXXX
